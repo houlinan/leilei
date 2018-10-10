@@ -40,7 +40,7 @@ public class AccountNumController {
     @PostMapping("/add")
     public LLJSONResult add(String accountNum , String password , String teamPwd , @RequestParam(required = false ) String teamId, String userId) {
         if (StringUtils.isEmpty(accountNum)) return LLJSONResult.errorMsg("传入的账号为空");
-        if (StringUtils.isEmpty(password)) return LLJSONResult.errorMsg("传入的账号密码为空");
+//        if (StringUtils.isEmpty(password)) return LLJSONResult.errorMsg("传入的账号密码为空");
         if (StringUtils.isEmpty(teamPwd)) return LLJSONResult.errorMsg("传入的团队密码为空");
 //        if (StringUtils.isEmpty(teamId)) return LLJSONResult.errorMsg("传入的团队信息ID为空");
         if (StringUtils.isEmpty(userId)) return LLJSONResult.errorMsg("传入的创建的用户信息ID为空");

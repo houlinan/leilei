@@ -8,6 +8,7 @@ import cn.hgxsp.leileigongzuoshi.entity.Team;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public interface BillDao extends JpaRepository<Bill, Long> {
 
     Page<Bill> findAllByFromAccountNum(AccountNum accountNum , Pageable pageable ) ;
 
-    List<String> findOperUserNameByTeam(Team team ) ;
+
+    @Query(value = "select DISTINCT  t.operusername from Bill t where t.form_team_id = ?" ,nativeQuery = true)
+    List<String> findAllOperUserNameByFormTeam(String  teamId ) ;
 
 }

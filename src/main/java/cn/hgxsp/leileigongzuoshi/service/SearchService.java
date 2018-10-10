@@ -29,9 +29,10 @@ public class SearchService {
     */
     public List<String>  getCurrAllTeamUserName(Team team){
 
-        List<String> seachUsernames = billDao.findOperUserNameByTeam(team);
+        List<String> seachUsernames = billDao.findAllOperUserNameByFormTeam(team.getId());
 
         return seachUsernames ;
+//        return null ;
     }
 
 

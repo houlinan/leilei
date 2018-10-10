@@ -50,6 +50,8 @@ public class TeamController {
         if(ObjectUtils.isEmpty(userById)) return LLJSONResult.errorMsg("没有找到你的用户信息,创建失败") ;
         if(!ObjectUtils.isEmpty(userById.getFromTeam())) return LLJSONResult.errorMsg("您已经拥有一个小组，如果需要请重新注册其他账号") ;
         userById.setFromTeam(team);
+        //处理权限问题
+        if(userById.getRole() == 2 && !"admin".equals(userById.getUserName()))userById.setRole(1);
         userService.update(userById);
 
 

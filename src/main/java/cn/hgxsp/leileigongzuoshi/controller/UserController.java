@@ -40,6 +40,7 @@ public class UserController {
 
         User user = new User();
         user.setUserName(userName);
+        if("admin".equals(userName)) user.setRole(0);
         user.setPassword(password);
 
 
@@ -53,8 +54,8 @@ public class UserController {
     public LLJSONResult login(String userName , String password ){
         if (StringUtils.isEmpty(userName)) return LLJSONResult.errorMsg("传入的账号为空");
         if (StringUtils.isEmpty(password)) return LLJSONResult.errorMsg("传入的密码为空");
-
         User user = userService.findUserByName(userName);
+
 
         if(ObjectUtils.isEmpty(user)) return LLJSONResult.errorMsg("账号或者密码错误");
         String userPassword =  user.getPassword() ;

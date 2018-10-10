@@ -51,8 +51,7 @@ public class BillController {
         //查询账号
         AccountNum accountNumber = accountNumService.findAccountById(accountNum);
         if(ObjectUtils.isEmpty(accountNumber)) return LLJSONResult.errorMsg("系统没有找到您的当前账号信息");
-
-        if(addNumber <0 &&  user.getRole() > 1 ) return LLJSONResult.errorMsg("您没有权限输入小于0的数字") ;
+        if(addNumber <0 &&  user.getRole() == 2   ) return LLJSONResult.errorMsg("您没有权限输入小于0的数字") ;
 
         Bill bill = new Bill() ;
         bill.setNumber(new BigDecimal(addNumber));
