@@ -55,6 +55,7 @@ public class BillController {
 
         Bill bill = new Bill() ;
         bill.setNumber(new BigDecimal(addNumber));
+        bill.setAccountName(accountNumber.getNumber());
         bill.setFormTeam(team);
         bill.setFromAccountNum(accountNumber);
         bill.setOperUserName(user.getUserName());

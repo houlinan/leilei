@@ -1,10 +1,25 @@
 package cn.hgxsp.leileigongzuoshi.service;
 
+import cn.hgxsp.leileigongzuoshi.DAO.AccountNumDao;
 import cn.hgxsp.leileigongzuoshi.DAO.BillDao;
+import cn.hgxsp.leileigongzuoshi.DAO.UserDao;
+import cn.hgxsp.leileigongzuoshi.entity.Bill;
 import cn.hgxsp.leileigongzuoshi.entity.Team;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.DateUtils;
+import org.thymeleaf.util.StringUtils;
+import sun.rmi.runtime.Log;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,11 +29,21 @@ import java.util.List;
  * Time : 16:18
  */
 @Service
+@Slf4j
 public class SearchService {
 
     @Autowired
     BillDao billDao;
 
+    @Autowired
+    UserDao userDao ;
+
+    @Autowired
+    AccountNumDao accountNumDao ;
+
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
     *DESC: 获取本小组的所有用户名称
@@ -27,13 +52,73 @@ public class SearchService {
     *@param:  [userId]
     *@return:  java.util.List<java.lang.String>
     */
-    public List<String>  getCurrAllTeamUserName(Team team){
+    public List<String>  getCurrAllTeamUserNameforUser(Team team){
 
-        List<String> seachUsernames = billDao.findAllOperUserNameByFormTeam(team.getId());
-
-        return seachUsernames ;
-//        return null ;
+        return  userDao.findAllUserByFromTeamId(team.getId());
     }
+
+    /**
+    *DESC: 获取本小组内所有的账号
+    *@author hou.linan
+    *@date:  2018/10/11 14:50
+    *@param:  [team]
+    *@return:  java.util.List<java.lang.String>
+    */
+    public List<String> getCurrAllTeamUserNamsForAccountNum(Team team){
+        return accountNumDao.findAllUserNamebyFromTeam(team.getId());
+    }
+
+    /**
+    *DESC: 通过条件查询符合用户的数据
+    *@author hou.linan
+    *@date:  2018/10/11 14:52
+    *@param:  [accountNums, userS, startTime, endTime]
+    *@return:  java.util.List<cn.hgxsp.leileigongzuoshi.entity.Bill>
+    */
+    public List<Bill> searchInCurrTeamBill(String teamId ,String accountNums ,String users , String startTime , String endTime){
+
+        StringBuilder sb = new StringBuilder("select * from bill where form_team_id = '" + teamId + "'");
+
+        if(!StringUtils.isEmpty(accountNums)) sb.append(" and accountname in ( ").append(accountNums)
+                .append(" )") ;
+        if(!StringUtils.isEmpty(users)) sb.append(" and operusername in ( ").append(users).append(" )") ;
+        if(!"点击设置".equals(startTime) && startTime.contains("-") && startTime.contains("20")){
+            sb.append("and UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('" +startTime+ "')");
+        }
+        if(!"点击设置".equals(endTime) && endTime.contains("-") && endTime.contains("20")){
+            String oldTime = endTime ;
+            endTime = DateAdd1Day(endTime) ;
+            if(StringUtils.isEmpty(endTime)) endTime = oldTime ;
+            sb.append(" and UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('" +endTime+ "')");
+        }
+        Query nativeQuery = entityManager.createNativeQuery(sb.toString());
+        List<Bill> resultList = nativeQuery.getResultList();
+
+
+        log.info("sql语句为：{}" ,resultList.toString());
+
+        return resultList ;
+    }
+
+    /**
+    *DESC: 将当前日期加一天
+    *@author hou.linan
+    *@date:  2018/10/11 16:31
+    *@param:  [date]
+    *@return:  java.lang.String
+    */
+    private String DateAdd1Day(String date){
+
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date d = new Date(f.parse(date).getTime() + 24 * 3600 * 1000);
+         return f.format(d);
+
+        }catch (Exception e) {
+        }
+        return null ;
+    }
+
 
 
 

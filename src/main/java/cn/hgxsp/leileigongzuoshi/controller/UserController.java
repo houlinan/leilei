@@ -14,7 +14,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * DESC：用户controller层
@@ -136,5 +136,21 @@ public class UserController {
         userService.update(needAddUser);
 
         return LLJSONResult.ok("设置用户【"+accountNum+"】进入Team成功！") ;
+    }
+
+    @GetMapping("/test")
+    public String tets(){
+        List<String> list = Arrays.asList("美国" ,"中国" , "英国" , "法国") ;
+        Map<String ,Object> result = new HashMap<>( );
+
+        List<Map<String ,String>> aaa = new ArrayList<>( );
+        for(String l : list ){
+            Map<String ,String> t = new HashMap<>( );
+            t.put("name" ,l) ;
+            t.put("value" , l);
+            aaa.add(t) ;
+        }
+
+        return aaa.toString() ;
     }
 }

@@ -27,6 +27,9 @@ public class Bill {
     @Column(name = "operusername")
     private String operUserName ;
 
+    @Column(name = "accountname")
+    private String accountName ;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(foreignKey = @ForeignKey(name = "none"))
