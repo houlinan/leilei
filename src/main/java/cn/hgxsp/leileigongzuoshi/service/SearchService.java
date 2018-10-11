@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.DateUtils;
 import org.thymeleaf.util.StringUtils;
-import sun.rmi.runtime.Log;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,7 +28,6 @@ import java.util.List;
  * Time : 16:18
  */
 @Service
-@Slf4j
 public class SearchService {
 
     @Autowired
@@ -95,7 +93,6 @@ public class SearchService {
         List<Bill> resultList = nativeQuery.getResultList();
 
 
-        log.info("sql语句为：{}" ,resultList.toString());
 
         return resultList ;
     }
