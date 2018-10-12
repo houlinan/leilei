@@ -91,7 +91,7 @@ public class SearchController {
             resultMap = new HashMap<>();
             resultMap.put("name" , currUserName) ;
             resultMap.put("value" , "'"+currUserName+ "'") ;
-            resultMap.put("checked" , false) ;
+            resultMap.put("checked" , true) ;
             resultList.add(resultMap) ;
         }
         return resultList ;
