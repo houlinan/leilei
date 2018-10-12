@@ -89,6 +89,7 @@ public class SearchService {
             if(StringUtils.isEmpty(endTime)) endTime = oldTime ;
             sb.append(" and UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('" +endTime+ "')");
         }
+        sb.append(" order by create_time desc") ;
         Query nativeQuery = entityManager.createNativeQuery(sb.toString());
         List<Bill> resultList = nativeQuery.getResultList();
 
