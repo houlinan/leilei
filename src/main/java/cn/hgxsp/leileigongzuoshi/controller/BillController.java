@@ -78,10 +78,11 @@ public class BillController {
 
         Page<Bill> result = billService.findByAccountNum(accountNum, pageIndex, pageSize);
 
-        System.out.println(result);
 
         return LLJSONResult.ok(result) ;
+
     }
+
 
 
 

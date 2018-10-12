@@ -97,15 +97,7 @@ public class UserService {
     *@return:  cn.hgxsp.leileigongzuoshi.entity.User
     */
     public User findUserByName(String userName){
-//
-//        User user = new User();
-//        user.setUserName(userName);
-//
-//        Example<User > ex  = Example.of(user);
-//
-//        Optional<User> result = userDao.findOne(ex);
-//        System.out.println(result);
-//        if(result.isPresent()) return result.get();
+
         return userDao.findUserByUserName(userName) ;
     }
 
