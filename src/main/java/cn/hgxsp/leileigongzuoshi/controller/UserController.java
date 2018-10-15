@@ -72,6 +72,7 @@ public class UserController {
     }
     @PostMapping("/update")
     public LLJSONResult updateUser(@RequestBody User user){
+        System.out.println("1111111111111111111111");
 
         if(ObjectUtils.isEmpty(user)) return LLJSONResult.errorMsg("您输入的用户信息为空");
 
@@ -84,6 +85,8 @@ public class UserController {
         findById.setMoblie(user.getMoblie());
         findById.setAnswer1(user.getAnswer1());
         findById.setAnswer2(user.getAnswer2());
+        log.info("用户输入的邮箱地址为：{}",user.getEmailAddress());
+        findById.setEmailAddress(user.getEmailAddress());
 
         User result = userService.update(findById);
         log.info("用户【{}】修改个人信息成功。修改的手机号为：{}，修改的密码问题1为：{}，修改的问题2为：{}"

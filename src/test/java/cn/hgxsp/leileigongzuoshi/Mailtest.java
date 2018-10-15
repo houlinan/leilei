@@ -8,6 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * DESC：
  * CREATED BY ：@hou.linan
@@ -25,10 +28,12 @@ public class Mailtest {
         @Test
         public void testSendSimple() {
 
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+            df.format(new Date());// new Date()为获取当前系统时间
+        }
 
-            sendEmailUtils.testSendSimple();
+//            sendEmailUtils.testSendSimple();
 
         }
 
 
-}

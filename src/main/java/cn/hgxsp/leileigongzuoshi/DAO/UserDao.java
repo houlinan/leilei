@@ -22,4 +22,7 @@ public interface UserDao  extends JpaRepository<User, String> {
     @Query(value = "select DISTINCT t.username from user t where t.from_team_id = ?" , nativeQuery = true)
     List<String> findAllUserByFromTeamId(String teamId) ;
 
+    @Query(value = "select t.* from user t where role = 1 " , nativeQuery = true)
+    List<User> findAllUserByRole();
+
 }

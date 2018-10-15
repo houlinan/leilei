@@ -35,6 +35,9 @@ public class User {
 
     private String moblie ;
 
+    @Column(name = "emailaddress")
+    private String emailAddress;
+
     //.0为超级管路  1 为小组管理员  2 为普通用户
     private int role = 2 ;
 

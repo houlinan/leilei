@@ -5,6 +5,7 @@ package cn.hgxsp.leileigongzuoshi.DAO;
 import cn.hgxsp.leileigongzuoshi.entity.AccountNum;
 import cn.hgxsp.leileigongzuoshi.entity.Bill;
 import cn.hgxsp.leileigongzuoshi.entity.Team;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,5 +29,8 @@ public interface BillDao extends JpaRepository<Bill, Long> {
 
     @Query(value = "select DISTINCT  t.operusername from Bill t where t.form_team_id = ?" ,nativeQuery = true)
     List<String> findAllOperUserNameByFormTeam(String  teamId ) ;
+
+    @Query(value = "select t.* from bill t where t.form_team_id = ? order by t.create_time desc" , nativeQuery = true)
+    List<Bill> findAllByTeam(String teamId) ;
 
 }
